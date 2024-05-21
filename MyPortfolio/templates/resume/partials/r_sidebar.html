@@ -1,0 +1,37 @@
+<div class="r-sidebar">
+    <div class="sidebar-button">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <div id="blog-sidebar" class="blog-sidebar">
+    <div class="blog-sidebar-content clearfix">
+      <div class="sidebar-item">
+        <div class="sidebar-title">
+          <h4>Recent Project</h4>
+        </div>
+        <ul>
+          {% for project in recent_projects %}
+          <li>
+            <a href="{% url 'resume:portfolio_detail' project.pk %}">{{project.title}}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-title">
+          <h4>Posts</h4>
+        </div>
+        <ul>
+          {% for post in recent_posts %}
+          <li>
+            <a href="{% url 'resume:blog_detail' post.pk %}">{{post.title}}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+  
+  
+    </div>
+  </div>

@@ -1,0 +1,54 @@
+{% extends 'resume/base.html' %} {% load static %}
+
+<!-- !SEO blocks -->
+<!-- Title -->
+{% block title %}{{meta_title}}{% endblock %}
+<!-- Description -->
+{% block description %}{{meta_description}}{% endblock %}
+<!-- Keywords -->
+{% block keywords %}{{meta_keywords}}{% endblock %}
+<!-- Author -->
+{% block author %}{{meta_author}}{% endblock %}
+
+<!-- !Content -->
+{% block content %}
+<div class="single-page-content">
+  <div class="content-wrapper">
+    <div class="page-title">
+      <h1>Resume</h1>
+    </div>
+
+    <article class="page type-page">
+      <div class="entry-content">
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-7">
+            <!-- Education -->
+            {% include 'resume/resume/education.html' %}
+
+            <!-- Experience -->
+            {% include 'resume/resume/experience.html' %}
+          </div>
+          <div class="col-xs-12 col-sm-5">
+            <!-- Skills -->
+            {% include 'resume/resume/skills.html' %}
+            
+            <!-- Add White Space -->
+            <div class="p-20"></div>
+            
+            <!-- Knowledge -->
+            {% include 'resume/resume/knowledge.html' %}
+            
+            <!-- Add White Space -->
+            <div class="p-50"></div>
+            
+            <!-- Certificates -->
+            {% include 'resume/resume/certification.html' %}
+            
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+{% endblock %}

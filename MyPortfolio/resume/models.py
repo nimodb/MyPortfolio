@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date
 
 
 # Create your models here.
@@ -9,13 +10,30 @@ class Title(models.Model):
         return self.name
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class SocialMedia(models.Model):
+    title = models.CharField(max_length=100)
+    url = models.URLField()
+    icon = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title
+
+
 class Profile(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     titles = models.ManyToManyField(Title)
+    social_media = models.ManyToManyField(SocialMedia)
     summary = models.TextField()
-    image = models.ImageField(upload_to="profiles/")
-    cv = models.FileField(upload_to="cvs/")
+    image = models.ImageField(upload_to="profiles/", blank=True, null=True)
+    cv = models.FileField(upload_to="cvs/", blank=True, null=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -31,18 +49,29 @@ class SkillCategory(models.Model):
 class Skill(models.Model):
     category = models.ForeignKey(SkillCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
+    percentage = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f"{self.name} ({self.category.name})"
 
 
 class Experience(models.Model):
+    class Meta:
+        ordering = ["-start_date"]
+
     title = models.CharField(max_length=100)
     company_name = models.CharField(max_length=100)
-    start_year = models.DateField()
-    end_year = models.DateField(blank=True, null=True)
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
     current = models.BooleanField(default=False)
     description = models.TextField()
+
+    def duration(self):
+        end_date = self.end_date if self.end_date and not self.current else date.today()
+        delta = end_date - self.start_date
+        years = delta.days // 365
+        months = (delta.days % 365) // 30
+        return f"{years} years, {months} months"
 
     def __str__(self):
         return f"{self.title} at {self.company_name}"
@@ -50,9 +79,9 @@ class Experience(models.Model):
 
 class Testimonial(models.Model):
     name = models.CharField(max_length=100)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, blank=True, null=True)
     feedback = models.TextField()
-    photo = models.ImageField(upload_to="testimonials/")
+    photo = models.ImageField(upload_to="testimonials/", blank=True, null=True)
     creation_date = models.DateField()
 
     def __str__(self):
@@ -76,10 +105,13 @@ class Knowledge(models.Model):
 
 
 class Education(models.Model):
+    class Meta:
+        ordering = ["-start_date"]
+
     degree = models.CharField(max_length=100)
     school = models.CharField(max_length=255)
-    start_year = models.DateField()
-    end_year = models.DateField()
+    start_date = models.DateField()
+    end_date = models.DateField()
     description = models.TextField()
 
     def __str__(self):
@@ -90,17 +122,78 @@ class Certification(models.Model):
     title = models.CharField(max_length=100)
     cert_id = models.CharField(max_length=50)
     date = models.DateField()
-    logo = models.ImageField(upload_to="certifications/")
+    logo = models.ImageField(upload_to="certifications/", blank=True, null=True)
+    url = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.title
 
 
-class ContactForm(models.Model):
+class PortfolioCategory(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Portfolio(models.Model):
+    category = models.ForeignKey(PortfolioCategory, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    video = models.URLField(blank=True, null=True)
+    url = models.URLField(blank=True, null=True)
+    creation_date = models.DateField()
+
+    def __str__(self):
+        return self.title
+
+
+class PortfolioImage(models.Model):
+    portfolio = models.ForeignKey(
+        Portfolio, related_name="images", on_delete=models.CASCADE
+    )
+    image = models.ImageField(upload_to="portfolios/")
+
+    def __str__(self):
+        return f"Image for {self.portfolio.title}"
+
+
+class BlogCategory(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Blog(models.Model):
+    category = models.ForeignKey(BlogCategory, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag)
+    creator = models.CharField(max_length=200, default="NimoDB")
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    video = models.URLField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+
+class BlogImage(models.Model):
+    blog = models.ForeignKey(Blog, related_name="images", on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="blog/")
+
+    def __str__(self):
+        return f"Image for {self.blog.title}"
+
+
+class Contact(models.Model):
     full_name = models.CharField(max_length=100)
     email = models.EmailField()
     subject = models.CharField(max_length=100)
     message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.subject

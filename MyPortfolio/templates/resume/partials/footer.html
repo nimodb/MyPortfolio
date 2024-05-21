@@ -1,0 +1,15 @@
+<footer class="site-footer clearfix">
+    <div class="footer-social">
+      <ul class="footer-social-links">
+        {% for item in profile.social_media.all %}
+        <li>
+          <a href="{{item.url}}" target="_blank">{{item.title}}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="footer-copyrights">
+      <p>© {{current_year}} All rights reserved.</p>
+    </div>
+</footer>

@@ -1,6 +1,8 @@
 from django.contrib import admin
 from resume.models import (
     Title,
+    Tag,
+    SocialMedia,
     Profile,
     WhatIDo,
     Testimonial,
@@ -8,9 +10,15 @@ from resume.models import (
     Experience,
     Knowledge,
     Certification,
-    ContactForm,
+    Contact,
     SkillCategory,
     Skill,
+    PortfolioCategory,
+    Portfolio,
+    PortfolioImage,
+    BlogCategory,
+    Blog,
+    BlogImage,
 )
 
 
@@ -20,10 +28,20 @@ class TitleAdmin(admin.ModelAdmin):
     list_display = ("name",)
 
 
+@admin.register(Tag)
+class TagsAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+
+
+@admin.register(SocialMedia)
+class SocialMediaAdmin(admin.ModelAdmin):
+    list_display = ("title",)
+
+
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ("first_name", "last_name")
-    filter_horizontal = ("titles",)
+    filter_horizontal = ("titles", "social_media")
 
 
 @admin.register(SkillCategory)
@@ -34,7 +52,7 @@ class SkillCategoryAdmin(admin.ModelAdmin):
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
     list_display = ("name", "category")
-    search_fields = ("name", "category__name")
+    list_filter = ("category__name",)
 
 
 @admin.register(Experience)
@@ -68,6 +86,45 @@ class CertificationAdmin(admin.ModelAdmin):
     list_display = ("title",)
 
 
-@admin.register(ContactForm)
+@admin.register(PortfolioCategory)
+class PortfolioCategoryAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+
+
+class PortfolioImageInline(admin.TabularInline):
+    model = PortfolioImage
+    extra = 1
+
+
+@admin.register(Portfolio)
+class PortfolioAdmin(admin.ModelAdmin):
+    list_display = ("title", "category")
+    search_fields = ("title", "category__name")
+    list_filter = ("category__name",)
+    filter_horizontal = ("tags",)
+    inlines = [PortfolioImageInline]
+
+
+@admin.register(BlogCategory)
+class BlogCategoryAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+
+
+class BlogImageInline(admin.TabularInline):
+    model = BlogImage
+    extra = 1
+
+
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ("title", "category")
+    search_fields = ("title", "category__name")
+    list_filter = ("category__name",)
+    filter_horizontal = ("tags",)
+    inlines = [BlogImageInline]
+
+
+@admin.register(Contact)
 class ContactFormAdmin(admin.ModelAdmin):
     list_display = ("full_name", "email", "subject")
+    list_filter = ("created_at",)

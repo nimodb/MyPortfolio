@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+
+    <title>{% block title %} {% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="{% block description %} {% endblock %}" />
+    <meta name="keywords" content="{% block keywords %} {% endblock %}" />
+    <meta name="author" content="{% block author %} {% endblock %}" />
+
+    <!-- Schema.org markup -->
+
+    <!-- FavIcon -->
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- CSS -->
+    {% include 'resume/partials/css.html' %}
+  </head>
+
+  <body>
+
+    <div class="lm-animated-bg"></div>
+    
+    <!-- Loading animation -->
+    {% include 'resume/partials/loading.html' %}
+
+    <!-- Page Wrapper -->
+    
+    <div class="page-wrapper bg-move-effect">
+      <div class="page-content site-content">
+        <!-- Site Header -->
+        {% include 'resume/partials/header.html' %}
+
+        <!-- Right Sidebar -->
+        {% include 'resume/partials/r_sidebar.html' %}
+        
+        <div class="content-area single-page-area" data-animation="animated-section-rotateRoomBottomIn">
+            <!-- Content -->
+            {% block content %} {% endblock %}
+
+            <!-- Footer -->
+            {% include 'resume/partials/footer.html' %}
+        </div>
+      </div>
+    </div>
+
+    <!-- JS  -->
+    {% include 'resume/partials/js.html' %}
+  </body>
+</html>

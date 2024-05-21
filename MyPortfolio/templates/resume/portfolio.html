@@ -1,0 +1,77 @@
+{% extends 'resume/base.html' %} {% load static %}
+
+<!-- !SEO blocks -->
+<!-- Title -->
+{% block title %}{{meta_title}}{% endblock %}
+<!-- Description -->
+{% block description %}{{meta_description}}{% endblock %}
+<!-- Keywords -->
+{% block keywords %}{{meta_keywords}}{% endblock %}
+<!-- Author -->
+{% block author %}{{meta_author}}{% endblock %}
+
+<!-- !Content -->
+{% block content %}
+<div class="single-page-content">
+  <div class="content-wrapper">
+    <div class="page-title">
+      <h1>Portfolio</h1>
+    </div>
+
+    <article class="page type-page">
+      <div class="entry-content">
+
+        <div class="row">
+          <div class=" col-xs-12 col-sm-12 ">
+            <!-- Portfolio Content -->
+            {% if portfolio_list %}
+            <div id="portfolio_content_q" class="portfolio-content">
+
+              <ul class="portfolio-filters">
+                <li class="active">
+                  <a class="filter btn btn-sm btn-link" data-group="category_all">All</a>
+                </li>
+                {% for category in category_list %}
+                <li>
+                  <a class="filter btn btn-sm btn-link" data-group="category_{{category.name}}">{{category.name}}</a>
+                </li>
+                {% endfor %}
+              </ul>
+
+
+              <!-- Portfolio Grid -->
+              <div class="portfolio-grid three-columns shuffle">
+                  {% for portfolio in portfolio_list %}
+                  <figure class="item standard" data-groups='["category_all", "category_{{portfolio.category.name}}"]'>
+                    <a href="{% url 'resume:portfolio_detail' portfolio.pk %}">
+                      <div class="portfolio-item-img">
+                        {% if portfolio.images.all %}
+                        <img src="{{portfolio.images.all.first.image.url}}" alt="{{portfolio.title}}" title="{{portfolio.title}}" />
+                        {% else %}
+                        <img src="{% static 'resume/assets/img/portfolio.jpg' %}" alt="{{portfolio.title}}" title="{{portfolio.title}}" />
+                        {% endif %}
+                      </div>
+
+                      <div class="project-desc">
+                        <div class="project-desc-text">
+                          <h4 class="name">{{portfolio.title}}</h4>
+                          <span class="category">{{portfolio.category.name}}</span>
+                        </div>
+                      </div>  
+                    </a>
+                  </figure>
+                  {% endfor %}
+              </div>
+            </div>
+            {% else %}
+            <div class="page-title">
+              <p>There is no Project :(</p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+{% endblock %}

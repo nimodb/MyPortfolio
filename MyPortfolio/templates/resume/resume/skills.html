@@ -1,0 +1,19 @@
+{% for category in skill_categories %}
+<div class="block-title element-title">
+    <h2>{{category.name}}:</h2>
+</div>
+
+<div id="skills_2" class="skills-info skills-first-style">
+    {% for skill in category.skill_set.all %}
+    <div class="clearfix">
+    <h4>{{skill.name}}</h4>
+    <div class="skill-value">{{skill.percentage}}%</div>
+    </div>
+    <div id="skill_6" data-value="{{skill.percentage}}" class="skill-container">
+    <div class="skill-percentage" style="width: {{skill.percentage}}%;"></div>
+    </div>
+    {% endfor %}
+</div>
+<!-- Add White Space -->
+<div class="p-20"></div>
+{% endfor %}

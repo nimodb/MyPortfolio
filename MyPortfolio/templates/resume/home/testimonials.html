@@ -1,0 +1,58 @@
+{% load static %}
+<section>
+    <!-- Add White Space -->
+    <div class="p-10"></div>
+    <!-- /Add White Space -->
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12">
+        <div class="block-title">
+          <h2>Testimonials</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12">        
+        <div id="testimonials_be6bf74" class="testimonials owl-carousel loop-off autoplay-off" data-mobile-items="1" data-tablet-items="2" data-items="2">
+          {% for testimonial in testimonial_list %}
+          <div class="testimonial testimonial-item">
+            <div class="testimonial-content">
+              <div class="testimonial-picture">
+                {% if testimonial.photo %}
+                <img src="{{testimonial.photo.url}}" alt="{{testimonial.name}}"/>
+                {% else %}
+                <img src="{% static 'resume/assets/img/sp_photo.jpg' %}" alt="{{testimonial.name}}"/>
+                {% endif %}
+              </div>              
+
+              <div class="testimonial-text">
+                <small>{{testimonial.creation_date|date:'d M Y'}}</small>
+                <p>{{testimonial.feedback}}</p>
+              </div>
+
+              <div class="testimonial-author-info">
+                <h5 class="testimonial-author">{{testimonial.name}}</h5>
+                <p class="testimonial-firm">
+                  {% if testimonial.title %}
+                  <a href="http://example.com" target="_blank">{{testimonial.title}}</a>
+                  {% else %}
+                  -
+                  {% endif %}
+                </p>
+              </div>
+
+              <div class="testimonial-icon">
+                <i class="fa fa-quote-left"></i>
+              </div>
+
+              <div class="testimonial-icon-big">
+                <i class="fa fa-quote-right"></i>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>

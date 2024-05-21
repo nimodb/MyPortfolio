@@ -1,0 +1,49 @@
+<section>
+    <!-- Add White Space -->
+    <div class="p-50"></div>
+    <!-- /Add White Space -->
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12">
+        <div class="block-title">
+          <h2>What I Do</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        {% for item in what_i_do_list %}
+        {% if not forloop.counter|divisibleby:2 %}
+          <div class="info-list-w-icon">
+              <div class="info-block-w-icon">
+                  <div class="ci-icon">
+                      <i class="{{ item.icon }}"></i>
+                  </div>
+                  <div class="ci-text">
+                      <h4>{{ item.title }}</h4>
+                      <p>{{ item.description }}</p>
+                  </div>
+              </div>
+          </div>
+          {% endif %}
+      {% endfor %}
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        {% for item in what_i_do_list %}
+        {% if forloop.counter|divisibleby:2 %}
+          <div class="info-list-w-icon">
+              <div class="info-block-w-icon">
+                  <div class="ci-icon">
+                      <i class="{{ item.icon }}"></i>
+                  </div>
+                  <div class="ci-text">
+                      <h4>{{ item.title }}</h4>
+                      <p>{{ item.description }}</p>
+                  </div>
+              </div>
+          </div>
+          {% endif %}
+      {% endfor %}
+      </div>
+  </div>
+  </section>

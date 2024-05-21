@@ -1,0 +1,40 @@
+{% load static %}
+<section>      
+    <div class="section-content vcentered home-page-third-style">
+
+      <div id="home_content_1" class="home-content">
+        <div class="row flex-v-align">
+          <div class="col-sm-12 without-padding col-md-6 col-lg-6">
+            <div class="home-photo">
+              {% if profile.image %}
+              <div class="hp-inner" style="background-image: url({{profile.image.url}})"></div>
+              {% else %}
+              <div class="hp-inner" style="background-image: url(../../../static/resume/assets/img/sp_photo.jpg)"></div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="home-text">
+              <div class="owl-carousel text-rotation">
+                {% for title in profile.titles.all %}                                
+                  <div class="item">
+                    <h4>{{title.name}}</h4>
+                  </div>
+                {% endfor %}
+              </div>
+              
+              <h1><span>Hi, I'm</span> {{profile.first_name}} {{profile.last_name}}.</h1>
+              <p>{{profile.summary}}</p>
+          
+              <div class="home-buttons">
+                {% if profile.cv %}
+                <a href="{{profile.cv.url}}" class="btn btn-primary">Download CV</a>
+                {% endif %}
+                <a href="{% url 'resume:contact' %}" class="btn btn-secondary">Contact</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

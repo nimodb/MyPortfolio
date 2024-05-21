@@ -1,0 +1,103 @@
+{% extends 'resume/base.html' %} {% load static %}
+
+<!-- !SEO blocks -->
+<!-- Title -->
+{% block title %}{{meta_title}}{% endblock %}
+<!-- Description -->
+{% block description %}{{meta_description}}{% endblock %}
+<!-- Keywords -->
+{% block keywords %}{{meta_keywords}}{% endblock %}
+<!-- Author -->
+{% block author %}{{meta_author}}{% endblock %}
+
+<!-- !Content -->
+{% block content %}
+<div class="single-page-content">
+  <div class="content-wrapper">
+    <article class="post">
+
+        <header class="entry-header">
+          <div class="entry-meta entry-meta-top">
+            <span><a href="https://google.com" rel="category tag">{{blog.category.name}}</a></span>      
+          </div>
+
+          <h2 class="entry-title">{{blog.title}}</h2>
+        </header>
+        <div class="post-thumbnail">
+          {% if blog.images.all %}
+          <a href="{{blog.images.all.first.image.url}}" class="lightbox">
+            <img src="{{blog.images.all.first.image.url}}" alt="{{blog.title}}" title="" />
+          </a>
+          {% else %}
+          <a href="{% static 'resume/assets/img/blog.jpg' %}" class="lightbox">
+            <img src="{% static 'resume/assets/img/blog.jpg' %}" alt="{{blog.title}}" title="" />
+          </a>
+          {% endif %}
+        </div>
+
+        <div class="post-content">
+          <div class="entry-content">
+
+            <div class="row">
+              <div class=" col-xs-12 col-sm-12 ">
+
+                  <p>{{blog.content|linebreaks}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="entry-meta entry-meta-bottom">
+            <div class="date-author">
+              
+              <span class="entry-date">
+                <a rel="bookmark">
+                  <i class="far fa-clock"></i>
+                  <time class="entry-date"> {{blog.created_at|date:'d M Y'}}</time>
+                </a>
+              </span>
+
+              <span class="author vcard">
+                <a class="url fn n" rel="author">
+                  <i class="fas fa-user"></i>
+                  <span> {{blog.creator}}</span>
+                </a>
+              </span>
+
+              <span class="author vcard">
+                <a href="https://google.com" class="url fn n" rel="author">
+                  <i class="fas fa-layer-group"></i>
+                  <span> {{blog.category.name}}</span>
+                </a>
+              </span>
+            </div>
+            <div class="entry-share btn-group share-buttons">
+              <a href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" class="btn" target="_blank" title="Share on Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+
+              <a href="https://twitter.com/share?url=http://example.com/" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" class="btn" target="_blank" title="Share on Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+              
+              <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://example.com/" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="btn" title="Share on LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              
+              <a href="http://www.digg.com/submit?url=http://example.com/" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="btn" title="Share on Digg">
+                <i class="fab fa-digg"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="post-tags">
+            <span class="tags">
+              {% for tag in blog.tags.all %}
+              <a rel="tag">{{tag.name}}</a>
+              {% endfor %}
+            </span>
+          </div>
+        </div>
+      </article>
+  </div>
+</div>
+{% endblock %}

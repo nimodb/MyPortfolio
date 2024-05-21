@@ -1,0 +1,38 @@
+{% extends 'resume/base.html' %} {% load static %}
+
+<!-- !SEO blocks -->
+<!-- Title -->
+{% block title %}{{meta_title}}{% endblock %}
+<!-- Description -->
+{% block description %}{{meta_description}}{% endblock %}
+<!-- Keywords -->
+{% block keywords %}{{meta_keywords}}{% endblock %}
+<!-- Author -->
+{% block author %}{{meta_author}}{% endblock %}
+
+<!-- !Content -->
+{% block content %}
+<!-- Page Content -->
+<div class="single-page-content">
+  <div class="content-wrapper">
+    <!-- About Me Section -->
+    {% include 'resume/home/about_me.html' %}
+
+    <!-- What I DO / Services Section -->
+    {% include 'resume/home/what_i_do.html' %}
+
+    <!-- Testimonials Section -->
+    {% include 'resume/home/testimonials.html' %}
+
+    <!-- Clients Section -->
+    {% include 'resume/home/clients.html' %}
+
+    <!-- Pricing Section -->
+    {% include 'resume/home/pricing.html' %}
+
+    <!-- Fun Facts Section -->
+    {% include 'resume/home/fun_facts.html' %}
+  </div>
+</div>
+{% endblock %}
+

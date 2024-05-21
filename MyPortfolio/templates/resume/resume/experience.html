@@ -1,0 +1,14 @@
+<div class="block-title">
+    <h2>Experience</h2>
+  </div>
+
+  <div class="timeline clearfix">
+    {% for experience in experience_list %}
+    <div class="timeline-item clearfix">
+      <h5 class="item-period highlighted">{{experience.start_date|date:"M Y"}} - {% if experience.current %}Current{% else %}{{experience.end_date|date:"M Y"}} <small>({{experience.duration}})</small>{% endif %}</h5>
+      <span class="item-company">{{experience.company_name}}</span>
+      <h4 class="item-title">{{experience.title}}</h4>
+      <p>{{experience.description|linebreaks}}</p>
+    </div>
+    {% endfor %}
+  </div>

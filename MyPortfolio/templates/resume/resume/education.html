@@ -1,0 +1,14 @@
+<div class="block-title">
+    <h2>Education</h2>
+  </div>
+
+  <div class="timeline clearfix">
+    {% for education in education_list %}
+    <div class="timeline-item clearfix">
+      <h5 class="item-period highlighted">{{education.start_date|date:"M Y"}} - {{education.end_date|date:"M Y"}}</h5>
+      <span class="item-company">{{education.school}}</span>
+      <h4 class="item-title">{{education.degree}}</h4>
+      <p>{{education.description}}</p>
+    </div>
+    {% endfor %}
+  </div>

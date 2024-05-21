@@ -1,0 +1,67 @@
+{% extends 'resume/base.html' %} {% load static %}
+
+<!-- !SEO blocks -->
+<!-- Title -->
+{% block title %}{{meta_title}}{% endblock %}
+<!-- Description -->
+{% block description %}{{meta_description}}{% endblock %}
+<!-- Keywords -->
+{% block keywords %}{{meta_keywords}}{% endblock %}
+<!-- Author -->
+{% block author %}{{meta_author}}{% endblock %}
+
+<!-- !Content -->
+{% block content %}
+<div class="single-page-content">
+  <div class="content-wrapper">
+    <div class="page-title">
+      <h1>Blog</h1>
+    </div>
+
+    <article class="page type-page">
+      <div class="entry-content">
+
+        <div class="row">
+          <div class=" col-xs-12 col-sm-12 ">
+
+            <div class="blog-masonry two-columns clearfix">
+              {% if blog_list %}
+                {% for item in blog_list %}
+                <div class="item">
+                  <div class="blog-card">
+                    <div class="media-block">
+                      <div class="category">
+                        <a href="https://google.com" title="View all posts in {{item.category.name}}">{{item.category.name}}</a>
+                      </div>
+                      <a href="{% url 'resume:blog_detail' item.pk %}">
+                        {% if item.images.all %}
+                        <img src="{{item.images.all.first.image.url}}" alt="{{item.title}}" title="" />
+                        {% else %}
+                        <img src="{% static 'resume/assets/img/blog.jpg' %}" alt="{{item.title}}" title="" />
+                        {% endif %}
+                        <div class="mask"></div>
+                      </a>
+                    </div>
+                    <div class="post-info">
+                      <div class="post-date">{{item.created_at|date:'d M Y'}}</div>
+                      <a href="{% url 'resume:blog_detail' item.pk %}">
+                        <h4 class="blog-item-title">{{item.title}}</h4>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              {% else %}
+              <div class="page-title">
+                <p>There is no Blog :(</p>
+              </div>
+              {% endif %}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+{% endblock %}

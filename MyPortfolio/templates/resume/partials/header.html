@@ -1,0 +1,91 @@
+{% load static %}
+<header id="site_header" class="header">
+    <div class="header-content">
+      <!-- Menu Button Icon -->
+      <div class="menu-button">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <!-- /Menu Button Icon -->
+          
+      <!-- Personal Photo or Site Logo -->
+      <!-- <div class="header-photo">
+        <a href="#">
+          <img src="{% static 'resume/assets/img/sp_photo.jpg' %}" alt="image">
+        </a>
+      </div> -->
+  
+      <!-- Text Logo -->
+      <div class="header-titles">
+        <a href="{% url 'resume:home' %}">
+          <h2>{{profile.first_name.0}}{{profile.last_name.0}}</h2>
+        </a>
+      </div>
+      <!-- Text Logo -->
+    </div>
+    
+    <!-- Site Main Menu & Profile Card -->
+    <div class="site-menu profile-card-on flex-v-align dl-menuwrapper">
+      <!-- Profile Card -->
+      <div class="profile-card flex-v-align">
+        <div class="profile-card-block">
+          <!-- Profile Photo -->
+          <div class="profile-img">
+            <!-- <a href="#"> -->
+              <img src="{% static 'resume/assets/img/sp_photo.jpg' %}" alt="{{profile.first_name}} {{profile.last_name}}">
+            <!-- </a> -->
+          </div>
+          <!-- /Profile Photo -->
+          
+          <!-- Profile Titles -->
+          <a href="#">
+            <h3 class="site-title">{{profile.first_name}} {{profile.last_name}}</h3>
+          </a>
+                      
+          <h5 class="site-subtitle">{{profile.titles.all.first}}</h5>
+          <!-- /Profile Titles -->
+          
+          <!-- Social Links -->
+          <div class="social-links">
+            <ul>
+              {% for item in profile.social_media.all %}
+              <li>
+                <a href="{{item.url}}" target="_blank">
+                  <i class="{{item.icon}}"></i>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <!-- /Social Links -->
+        </div>
+      </div>
+      <!-- /Profile Card -->
+  
+      <!-- Main Menu -->
+      <ul class="alan-classic-menu main-menu dl-menu dl-menuopen">
+        <li class="menu-item current-menu-item">
+          <a href="{% url 'resume:home' %}">About Me</a>
+        </li>
+        
+        <li class="menu-item">
+          <a href="{% url 'resume:resume' %}">Resume</a>
+        </li>
+  
+        <li class="menu-item">
+          <a href="{% url 'resume:portfolio' %}">Portfolio</a>
+        </li>
+  
+        <li class="menu-item">
+          <a href="{% url 'resume:blog' %}">Blog</a>
+        </li>
+        
+        <li class="menu-item">
+          <a href="{% url 'resume:contact' %}">Contact</a>
+        </li>
+      </ul>
+      <!-- /Main Menu -->
+    </div>
+    <!-- /Site Main Menu & Profile Card -->
+</header>
