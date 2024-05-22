@@ -18,6 +18,9 @@ class Tag(models.Model):
 
 
 class SocialMedia(models.Model):
+    class Meta:
+        verbose_name_plural = "Social Media"
+
     title = models.CharField(max_length=100)
     url = models.URLField()
     icon = models.CharField(max_length=100)
@@ -40,6 +43,9 @@ class Profile(models.Model):
 
 
 class SkillCategory(models.Model):
+    class Meta:
+        verbose_name_plural = "Skill Categories"
+
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -89,6 +95,9 @@ class Testimonial(models.Model):
 
 
 class WhatIDo(models.Model):
+    class Meta:
+        verbose_name_plural = "What I Do"
+
     title = models.CharField(max_length=100)
     description = models.TextField()
     icon = models.CharField(max_length=50)
@@ -98,6 +107,9 @@ class WhatIDo(models.Model):
 
 
 class Knowledge(models.Model):
+    class Meta:
+        verbose_name_plural = "Knowledge"
+
     title = models.CharField(max_length=100)
 
     def __str__(self):
@@ -130,6 +142,9 @@ class Certification(models.Model):
 
 
 class PortfolioCategory(models.Model):
+    class Meta:
+        verbose_name_plural = "Portfolio Categories"
+
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -160,6 +175,9 @@ class PortfolioImage(models.Model):
 
 
 class BlogCategory(models.Model):
+    class Meta:
+        verbose_name_plural = "Blog Categories"
+
     name = models.CharField(max_length=100)
 
     def __str__(self):
