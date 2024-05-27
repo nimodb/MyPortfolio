@@ -1,12 +1,14 @@
-from django.shortcuts import render
+from django.utils.html import strip_tags
 from django.views.generic import TemplateView, FormView, ListView, DetailView
 from django.urls import reverse_lazy
 from django.contrib import messages
 from resume.models import (
+    Tag,
     Education,
     Experience,
     Certification,
     SkillCategory,
+    Language,
     Knowledge,
     WhatIDo,
     Testimonial,
@@ -57,6 +59,7 @@ class ResumeView(TemplateView):
         context.update(global_context())
         context.update(self.get_education_context())
         context.update(self.get_experience_context())
+        context.update(self.get_language_context())
         context.update(self.get_skill_context())
         context.update(self.get_knowledge_context())
         context.update(self.get_certification_context())
@@ -70,6 +73,10 @@ class ResumeView(TemplateView):
     def get_experience_context(self):
         experience_list = Experience.objects.all()
         return {"experience_list": experience_list}
+
+    def get_language_context(self):
+        language_list = Language.objects.all()
+        return {"language_list": language_list}
 
     def get_skill_context(self):
         skill_categories = SkillCategory.objects.prefetch_related("skill_set").all()
@@ -97,6 +104,9 @@ class BlogView(ListView):
     template_name = "resume/blog.html"
     context_object_name = "blog_list"
 
+    def get_queryset(self):
+        return super().get_queryset().filter(status="published")
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -108,7 +118,7 @@ class BlogView(ListView):
         return {
             "meta_title": "NONE NAME",
             "meta_description": "NONE NAME",
-            "meta_keywords": "NONE NAME",
+            "meta_keywords": ", ".join(tag.name for tag in Tag.objects.all()),
             "meta_author": "NONE NAME",
         }
 
@@ -117,6 +127,13 @@ class BlogDetailView(DetailView):
     model = Blog
     template_name = "resume/blog_detail.html"
     context_object_name = "blog"
+
+    def get(self, request, *args, **kwargs):
+        # Get the current blog object
+        self.object = self.get_object()
+        # Increment view count
+        self.object.increment_view_count()
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -133,11 +150,12 @@ class BlogDetailView(DetailView):
         return {"next_item": next_item, "prev_item": prev_item}
 
     def get_meta_tags(self):
+        blog = self.object
         return {
-            "meta_title": "NONE NAME",
-            "meta_description": "NONE NAME",
-            "meta_keywords": "NONE NAME",
-            "meta_author": "NONE NAME",
+            "meta_title": blog.title,
+            "meta_description": strip_tags(blog.content[:150]),
+            "meta_keywords": ", ".join(tag.name for tag in blog.tags.all()),
+            "meta_author": blog.creator,
         }
 
 
@@ -191,11 +209,12 @@ class PortfolioDetailView(DetailView):
         return {"next_item": next_item, "prev_item": prev_item}
 
     def get_meta_tags(self):
+        portfolio = self.object
         return {
-            "meta_title": "NONE NAME",
-            "meta_description": "NONE NAME",
-            "meta_keywords": "NONE NAME",
-            "meta_author": "NONE NAME",
+            "meta_title": portfolio.title,
+            "meta_description": strip_tags(portfolio.description[:150]),
+            "meta_keywords": ", ".join(tag.name for tag in portfolio.tags.all()),
+            "meta_author": "Nima Saadati, Nimodb, nimodb",
         }
 
 

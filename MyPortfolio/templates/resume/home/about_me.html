@@ -1,5 +1,5 @@
 {% load static %}
-<section>      
+<section>
     <div class="section-content vcentered home-page-third-style">
 
       <div id="home_content_1" class="home-content">
@@ -24,11 +24,14 @@
               </div>
               
               <h1><span>Hi, I'm</span> {{profile.first_name}} {{profile.last_name}}.</h1>
-              <p>{{profile.summary}}</p>
+              <p style="text-align: justify; word-break: auto-phrase">{{profile.summary}}</p>
           
               <div class="home-buttons">
-                {% if profile.cv %}
-                <a href="{{profile.cv.url}}" class="btn btn-primary">Download CV</a>
+                {% if profile.cv_de %}
+                <a href="{{profile.cv_de.url}}" class="btn btn-primary"><i class="fas fa-download"></i> CV <small>(DE)</small></a>
+                {% endif %}
+                {% if profile.cv_en %}
+                <a href="{{profile.cv_en.url}}" class="btn btn-primary"><i class="fas fa-download"></i> CV <small>(EN)</small></a>
                 {% endif %}
                 <a href="{% url 'resume:contact' %}" class="btn btn-secondary">Contact</a>
               </div>

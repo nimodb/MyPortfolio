@@ -1,8 +1,15 @@
 from django.db import models
 from datetime import date
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 # Create your models here.
+STATUS_CHOICES = [
+    ("draft", "Draft"),
+    ("published", "Published"),
+]
+
+
 class Title(models.Model):
     name = models.CharField(max_length=100)
 
@@ -22,7 +29,7 @@ class SocialMedia(models.Model):
         verbose_name_plural = "Social Media"
 
     title = models.CharField(max_length=100)
-    url = models.URLField()
+    url = models.CharField(max_length=200)
     icon = models.CharField(max_length=100)
 
     def __str__(self):
@@ -36,10 +43,19 @@ class Profile(models.Model):
     social_media = models.ManyToManyField(SocialMedia)
     summary = models.TextField()
     image = models.ImageField(upload_to="profiles/", blank=True, null=True)
-    cv = models.FileField(upload_to="cvs/", blank=True, null=True)
+    cv_de = models.FileField(upload_to="cvs/de/", blank=True, null=True)
+    cv_en = models.FileField(upload_to="cvs/en/", blank=True, null=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+class Language(models.Model):
+    name = models.CharField(max_length=50)
+    level = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.name} ({self.level})"
 
 
 class SkillCategory(models.Model):
@@ -86,6 +102,7 @@ class Experience(models.Model):
 class Testimonial(models.Model):
     name = models.CharField(max_length=100)
     title = models.CharField(max_length=100, blank=True, null=True)
+    url = models.URLField(blank=True, null=True)
     feedback = models.TextField()
     photo = models.ImageField(upload_to="testimonials/", blank=True, null=True)
     creation_date = models.DateField()
@@ -185,17 +202,26 @@ class BlogCategory(models.Model):
 
 
 class Blog(models.Model):
+    class Meta:
+        ordering = ["-created_at"]
+
     category = models.ForeignKey(BlogCategory, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
     creator = models.CharField(max_length=200, default="NimoDB")
     title = models.CharField(max_length=200)
-    content = models.TextField()
+    content = RichTextUploadingField(blank=True, null=True)
     video = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    view_count = models.PositiveIntegerField(default=0)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="draft")
 
     def __str__(self):
         return self.title
+
+    def increment_view_count(self):
+        self.view_count += 1
+        self.save(update_fields=["view_count"])
 
 
 class BlogImage(models.Model):

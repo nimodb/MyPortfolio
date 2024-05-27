@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # APPS
+    "ckeditor",
     "resume",
     "django_recaptcha",
 ]
@@ -142,3 +143,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Recaptcha
 RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
 RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
+
+
+# CKeditor
+CKEDITOR_UPLOAD_PATH = "uploads/"

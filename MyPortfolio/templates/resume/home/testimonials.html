@@ -35,7 +35,7 @@
                 <h5 class="testimonial-author">{{testimonial.name}}</h5>
                 <p class="testimonial-firm">
                   {% if testimonial.title %}
-                  <a href="http://example.com" target="_blank">{{testimonial.title}}</a>
+                  <a href="{{testimonial.url}}" target="_blank">{{testimonial.title}}</a>
                   {% else %}
                   -
                   {% endif %}

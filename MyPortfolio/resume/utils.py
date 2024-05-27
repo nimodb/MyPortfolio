@@ -11,7 +11,7 @@ def global_context():
         profile = None
 
     recent_projects = Portfolio.objects.order_by("-id")[:5]
-    recent_posts = Blog.objects.order_by("-id")[:5]
+    recent_posts = Blog.objects.filter(status="published").order_by("-id")[:5]
 
     return {
         "current_year": current_year,

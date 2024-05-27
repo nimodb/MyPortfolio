@@ -23,7 +23,8 @@ from django.conf import settings
 urlpatterns = (
     [
         path("admin/", admin.site.urls),
-        path("resume/", include("resume.urls")),
+        path("", include("resume.urls")),
+        path("ckeditor/", include("ckeditor_uploader.urls")),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

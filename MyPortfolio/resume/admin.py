@@ -11,6 +11,7 @@ from resume.models import (
     Knowledge,
     Certification,
     Contact,
+    Language,
     SkillCategory,
     Skill,
     PortfolioCategory,
@@ -42,6 +43,11 @@ class SocialMediaAdmin(admin.ModelAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ("first_name", "last_name")
     filter_horizontal = ("titles", "social_media")
+
+
+@admin.register(Language)
+class LanguageAdmin(admin.ModelAdmin):
+    list_display = ("name", "level")
 
 
 @admin.register(SkillCategory)
@@ -118,9 +124,18 @@ class BlogImageInline(admin.TabularInline):
 
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ("title", "category", "creator", "created_at", "updated_at")
+    list_display = (
+        "title",
+        "category",
+        "creator",
+        "created_at",
+        "updated_at",
+        "view_count",
+        "status",
+    )
+    list_editable = ("status",)
     search_fields = ("title", "category")
-    list_filter = ("category",)
+    list_filter = ("category", "status")
     filter_horizontal = ("tags",)
     inlines = [BlogImageInline]
 

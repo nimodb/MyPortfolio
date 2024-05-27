@@ -11,8 +11,8 @@ from resume.views import (
 
 app_name = "resume"
 urlpatterns = [
-    path("about-me", HomeView.as_view(), name="home"),
-    path("", ResumeView.as_view(), name="resume"),
+    path("", HomeView.as_view(), name="home"),
+    path("resume/", ResumeView.as_view(), name="resume"),
     path("contact/", ContactView.as_view(), name="contact"),
     path("blog/", BlogView.as_view(), name="blog"),
     path("blog/<int:pk>/", BlogDetailView.as_view(), name="blog_detail"),

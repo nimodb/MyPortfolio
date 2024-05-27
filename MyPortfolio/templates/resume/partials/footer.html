@@ -1,3 +1,4 @@
+{% load static %}
 <footer class="site-footer clearfix">
     <div class="footer-social">
       <ul class="footer-social-links">
@@ -10,6 +11,9 @@
     </div>
 
     <div class="footer-copyrights">
-      <p>© {{current_year}} All rights reserved.</p>
+      <p>
+        © {{current_year}} All rights reserved.
+         <img style="width: auto; height: 1.5em; vertical-align: middle;" src="{% static 'resume/assets/img/logo-dark.png' %}" alt="image">
+      </p>
     </div>
 </footer>

@@ -1,0 +1,11 @@
+<div class="block-title">
+    <h2>Language</h2>
+</div> 
+
+<ul class="knowledges">
+    {% for language in language_list %}
+    <li>{{language.name}} <small>({{language.level}})</small></li>
+    {% endfor %}
+</ul>
+<!-- Add White Space -->
+<div class="p-20"></div>
