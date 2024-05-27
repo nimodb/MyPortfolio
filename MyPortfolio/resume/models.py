@@ -1,3 +1,5 @@
+from bs4 import BeautifulSoup
+import re
 from django.db import models
 from datetime import date
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -214,10 +216,27 @@ class Blog(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     view_count = models.PositiveIntegerField(default=0)
+    reading_time = models.PositiveIntegerField(default=0)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="draft")
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.reading_time = self.calculate_reading_time()
+        super(Blog, self).save(*args, **kwargs)
+
+    def calculate_reading_time(self):
+        def strip_html_tags(text):
+            soup = BeautifulSoup(text, "html.parser")
+            return soup.get_text()
+
+        text_without_html = strip_html_tags(self.content)
+        words = re.findall(r"\w+", text_without_html)
+        word_count = len(words)
+        reading_speed = 200  # average reading speed in words per minute
+        reading_time = word_count / reading_speed
+        return round(reading_time)
 
     def increment_view_count(self):
         self.view_count += 1

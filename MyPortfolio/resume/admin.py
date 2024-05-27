@@ -131,6 +131,7 @@ class BlogAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
         "view_count",
+        "reading_time",
         "status",
     )
     list_editable = ("status",)
