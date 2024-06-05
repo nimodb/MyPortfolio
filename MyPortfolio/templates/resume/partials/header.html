@@ -33,7 +33,11 @@
           <!-- Profile Photo -->
           <div class="profile-img">
             <!-- <a href="#"> -->
+              {% if profile.avatar %}
+              <img src="{{profile.avatar.url}}" alt="{{profile.first_name}} {{profile.last_name}}">
+              {% else %}
               <img src="{% static 'resume/assets/img/sp_photo.jpg' %}" alt="{{profile.first_name}} {{profile.last_name}}">
+              {% endif %}
             <!-- </a> -->
           </div>
           <!-- /Profile Photo -->

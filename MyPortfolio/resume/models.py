@@ -45,6 +45,7 @@ class Profile(models.Model):
     social_media = models.ManyToManyField(SocialMedia)
     summary = models.TextField()
     image = models.ImageField(upload_to="profiles/", blank=True, null=True)
+    avatar = models.ImageField(upload_to="profiles/", blank=True, null=True)
     cv_de = models.FileField(upload_to="cvs/de/", blank=True, null=True)
     cv_en = models.FileField(upload_to="cvs/en/", blank=True, null=True)
 
