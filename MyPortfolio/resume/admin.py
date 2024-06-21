@@ -1,109 +1,88 @@
 from django.contrib import admin
-from resume.models import (
-    Title,
-    Tag,
-    SocialMedia,
-    Profile,
-    WhatIDo,
-    Testimonial,
-    Education,
-    Experience,
-    Knowledge,
-    Certification,
-    Contact,
-    Language,
-    SkillCategory,
-    Skill,
-    PortfolioCategory,
-    Portfolio,
-    PortfolioImage,
-    BlogCategory,
-    Blog,
-    BlogImage,
-)
+from . import models
 
 
 # Register your models here.
-@admin.register(Title)
+@admin.register(models.Title)
 class TitleAdmin(admin.ModelAdmin):
     list_display = ("name",)
 
 
-@admin.register(Tag)
+@admin.register(models.Tag)
 class TagsAdmin(admin.ModelAdmin):
     list_display = ("name",)
 
 
-@admin.register(SocialMedia)
+@admin.register(models.SocialMedia)
 class SocialMediaAdmin(admin.ModelAdmin):
     list_display = ("title", "url", "icon")
 
 
-@admin.register(Profile)
+@admin.register(models.Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ("first_name", "last_name")
     filter_horizontal = ("titles", "social_media")
 
 
-@admin.register(Language)
+@admin.register(models.Language)
 class LanguageAdmin(admin.ModelAdmin):
     list_display = ("name", "level")
 
 
-@admin.register(SkillCategory)
+@admin.register(models.SkillCategory)
 class SkillCategoryAdmin(admin.ModelAdmin):
     list_display = ("name",)
 
 
-@admin.register(Skill)
+@admin.register(models.Skill)
 class SkillAdmin(admin.ModelAdmin):
     list_display = ("name", "category", "percentage")
     list_filter = ("category",)
 
 
-@admin.register(Experience)
+@admin.register(models.Experience)
 class ExperienceAdmin(admin.ModelAdmin):
     list_display = ("title", "company_name", "start_date", "end_date", "current")
     search_fields = ("title", "company_name")
 
 
-@admin.register(Testimonial)
+@admin.register(models.Testimonial)
 class TestimonialAdmin(admin.ModelAdmin):
     list_display = ("name", "title", "creation_date")
     list_filter = ("creation_date",)
 
 
-@admin.register(WhatIDo)
+@admin.register(models.WhatIDo)
 class WhatIDoAdmin(admin.ModelAdmin):
     list_display = ("title",)
 
 
-@admin.register(Knowledge)
+@admin.register(models.Knowledge)
 class KnowledgeAdmin(admin.ModelAdmin):
     list_display = ("title",)
 
 
-@admin.register(Education)
+@admin.register(models.Education)
 class EducationAdmin(admin.ModelAdmin):
     list_display = ("degree", "school", "start_date", "end_date")
 
 
-@admin.register(Certification)
+@admin.register(models.Certification)
 class CertificationAdmin(admin.ModelAdmin):
     list_display = ("title", "cert_id", "date")
 
 
-@admin.register(PortfolioCategory)
+@admin.register(models.PortfolioCategory)
 class PortfolioCategoryAdmin(admin.ModelAdmin):
     list_display = ("name",)
 
 
 class PortfolioImageInline(admin.TabularInline):
-    model = PortfolioImage
+    model = models.PortfolioImage
     extra = 1
 
 
-@admin.register(Portfolio)
+@admin.register(models.Portfolio)
 class PortfolioAdmin(admin.ModelAdmin):
     list_display = ("title", "category")
     search_fields = ("title", "category__name")
@@ -112,18 +91,20 @@ class PortfolioAdmin(admin.ModelAdmin):
     inlines = [PortfolioImageInline]
 
 
-@admin.register(BlogCategory)
+@admin.register(models.BlogCategory)
 class BlogCategoryAdmin(admin.ModelAdmin):
     list_display = ("name",)
+    search_fields = ["name"]
 
 
 class BlogImageInline(admin.TabularInline):
-    model = BlogImage
+    model = models.BlogImage
     extra = 1
 
 
-@admin.register(Blog)
+@admin.register(models.Blog)
 class BlogAdmin(admin.ModelAdmin):
+    autocomplete_fields = ["category"]
     list_display = (
         "title",
         "category",
@@ -141,7 +122,7 @@ class BlogAdmin(admin.ModelAdmin):
     inlines = [BlogImageInline]
 
 
-@admin.register(Contact)
+@admin.register(models.Contact)
 class ContactFormAdmin(admin.ModelAdmin):
     list_display = ("full_name", "email", "subject", "created_at")
     list_filter = ("created_at",)
